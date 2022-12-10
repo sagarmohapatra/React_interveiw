@@ -19,12 +19,17 @@ const Featch = () => {
         copy.splice(index, 1)
         setstate(copy)
     }
-    const ser = (e) => {
+    const ser = async (e) => {
         setdata(e.target.value)
+        let a = await fetch("https://jsonplaceholder.typicode.com/users?=${data}")
+        let b = await a.json()
+        setstate(b)
+        setdata("")
+
     }
     return (
         <div>
-            <input type="search" placeholder='search here..' onChange={ser} />
+            <input type="search" placeholder='search here..' onChange={ser} value={data} />
             <table className='table table-striped'>
                 <thead>
                     <tr >
@@ -37,23 +42,26 @@ const Featch = () => {
                     </tr>
                 </thead>
                 <tbody>
+
                     {state.filter((dd) => {
                         if (data === "") {
                             return dd
                         } else if (dd.name.toLowerCase().includes(data.toLowerCase())) {
                             return dd
-                        } 
-                    }).map((val) => {
-                        return (
-                            <tr>
-                                <td>{val.id}</td>
-                                <td>{val.name}</td>
-                                <td>{val.email}</td>
-                                <td>{val.address.zipcode}</td>
-                                <td onClick={(index) => { deletes(index) }}><i class="fa-solid fa-trash"></i></td>
-                            </tr>
-                        )
-                    })}
+                        }
+                    })
+
+                        .map((val) => {
+                            return (
+                                <tr>
+                                    <td>{val.id}</td>
+                                    <td>{val.name}</td>
+                                    <td>{val.email}</td>
+                                    <td>{val.address.zipcode}</td>
+                                    <td onClick={(index) => { deletes(index) }}><i class="fa-solid fa-trash"></i></td>
+                                </tr>
+                            )
+                        })}
 
                 </tbody>
             </table>
