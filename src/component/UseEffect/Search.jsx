@@ -48,6 +48,7 @@ const Search = () => {
                 console.log(error);
             })
     }
+
     return (
         <div>
             <h1>Search, filter, sort using fake json</h1>
